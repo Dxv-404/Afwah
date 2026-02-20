@@ -483,8 +483,10 @@ html, body {
   top: var(--sp-3);
   left: var(--sp-3);
   display: flex;
-  gap: var(--sp-2);
+  flex-wrap: wrap;
+  gap: var(--sp-1) var(--sp-2);
   pointer-events: none;
+  max-width: 50%;
 }
 
 .graph-stat-pill {
@@ -497,6 +499,175 @@ html, body {
   background: rgba(0,0,0,0.5);
   backdrop-filter: blur(4px);
 }
+
+/* Platform filter toggles */
+.platform-filters {
+  position: absolute;
+  top: 40px;
+  left: var(--sp-3);
+  display: flex;
+  gap: 4px;
+  z-index: 10;
+}
+.plat-filter-btn {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-md);
+  background: transparent;
+  backdrop-filter: blur(4px);
+  color: rgba(255,255,255,0.45);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.plat-filter-btn.active {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.45);
+  color: #FFF;
+}
+.plat-filter-btn:hover {
+  border-color: rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.75);
+}
+
+/* --- Floating Widget System --- */
+.widget-thumbnails {
+  position: absolute;
+  top: var(--sp-3);
+  right: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  z-index: 15;
+  pointer-events: auto;
+}
+.widget-thumb {
+  width: 160px;
+  height: 85px;
+  border-radius: var(--radius-md);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.08);
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.widget-thumb:hover {
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+.widget-thumb canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.widget-thumb-label {
+  position: absolute;
+  bottom: 3px;
+  left: 6px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+  pointer-events: none;
+}
+
+.widget-expanded {
+  position: absolute;
+  z-index: 60;
+  min-width: 280px;
+  min-height: 200px;
+  background: rgba(26,26,40,0.95);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.widget-titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: rgba(0,0,0,0.25);
+  cursor: move;
+  user-select: none;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.widget-titlebar-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.6);
+}
+.widget-titlebar-btns {
+  display: flex;
+  gap: 4px;
+}
+.widget-titlebar-btns button {
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+.widget-titlebar-btns button:hover {
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.8);
+}
+.widget-body {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+.widget-body-empty {
+  padding: 20px;
+  text-align: center;
+  color: rgba(255,255,255,0.35);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+.widget-resize-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  cursor: nwse-resize;
+  z-index: 2;
+}
+.widget-resize-handle::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid rgba(255,255,255,0.15);
+  border-bottom: 2px solid rgba(255,255,255,0.15);
+}
+.widget-hidden { display: none !important; }
 
 /* --- Right Panel --- */
 #right-panel {
@@ -1771,6 +1942,66 @@ i[class^="ph-"] {
   0% { box-shadow: inset 0 0 20px rgba(200,82,148,0.5); }
   100% { box-shadow: none; }
 }
+.overview-cell canvas { cursor: grab; }
+.overview-cell canvas:active { cursor: grabbing; }
+.overview-heatmap-toggle {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  z-index: 5;
+}
+.overview-heatmap-toggle button {
+  width: 22px; height: 22px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  color: rgba(255,255,255,0.4);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  padding: 0;
+}
+.overview-heatmap-toggle button.active {
+  background: rgba(224,82,82,0.3);
+  border-color: rgba(224,82,82,0.5);
+  color: rgba(255,255,255,0.8);
+}
+.overview-heatmap-toggle button:hover {
+  border-color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.7);
+}
+.overview-zoom-controls {
+  position: absolute;
+  bottom: 6px;
+  right: 8px;
+  display: flex;
+  gap: 3px;
+  z-index: 5;
+}
+.overview-zoom-controls button {
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  color: rgba(255,255,255,0.4);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+.overview-zoom-controls button:hover {
+  border-color: rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.7);
+}
 
 /* --- Mutation Overlay (Phase 5) --- */
 .mutation-overlay {
@@ -2000,7 +2231,17 @@ i[class^="ph-"] {
           <span class="graph-stat-pill" id="gs-believing">0% believing</span>
           <span class="graph-stat-pill" id="gs-corrected">0% corrected</span>
           <span class="graph-stat-pill" id="gs-r0">R0: --</span>
+          <span class="graph-stat-pill" id="gs-hops">Hops: 0</span>
+          <span class="graph-stat-pill" id="gs-mutations">Mut: 0</span>
+          <span class="graph-stat-pill" id="gs-sharers">Sharers: 0</span>
         </div>
+        <div class="platform-filters" id="platform-filters">
+          <button class="plat-filter-btn active" data-platform="twitter" title="Twitter"><i class="ph ph-twitter-logo"></i></button>
+          <button class="plat-filter-btn active" data-platform="whatsapp" title="WhatsApp"><i class="ph ph-whatsapp-logo"></i></button>
+          <button class="plat-filter-btn active" data-platform="instagram" title="Instagram"><i class="ph ph-instagram-logo"></i></button>
+          <button class="plat-filter-btn active" data-platform="reddit" title="Reddit"><i class="ph ph-reddit-logo"></i></button>
+        </div>
+        <div class="widget-thumbnails" id="widget-thumbnails"></div>
         <div class="zoom-controls" id="zoom-controls">
           <button class="zoom-btn" id="zoom-in" title="Zoom In"><i class="ph ph-plus"></i></button>
           <button class="zoom-btn" id="zoom-out" title="Zoom Out"><i class="ph ph-minus"></i></button>
@@ -2043,10 +2284,10 @@ i[class^="ph-"] {
 
       <!-- Overview Grid (Phase 5, hidden by default) -->
       <div id="overview-grid" class="overview-grid hidden">
-        <div class="overview-cell" id="ov-twitter"><div class="overview-label">Twitter</div><canvas id="overview-twitter"></canvas><div class="overview-stats" id="ovs-twitter"></div></div>
-        <div class="overview-cell" id="ov-whatsapp"><div class="overview-label">WhatsApp</div><canvas id="overview-whatsapp"></canvas><div class="overview-stats" id="ovs-whatsapp"></div></div>
-        <div class="overview-cell" id="ov-instagram"><div class="overview-label">Instagram</div><canvas id="overview-instagram"></canvas><div class="overview-stats" id="ovs-instagram"></div></div>
-        <div class="overview-cell" id="ov-reddit"><div class="overview-label">Reddit</div><canvas id="overview-reddit"></canvas><div class="overview-stats" id="ovs-reddit"></div></div>
+        <div class="overview-cell" id="ov-twitter"><div class="overview-label">Twitter</div><div class="overview-heatmap-toggle"><button class="ov-heat-btn" data-platform="twitter" title="Infection heatmap"><i class="ph-fill ph-fire"></i></button></div><canvas id="overview-twitter"></canvas><div class="overview-stats" id="ovs-twitter"></div><div class="overview-zoom-controls"><button class="ov-zoom-btn" data-platform="twitter" data-action="reset" title="Reset view">⌂</button><button class="ov-zoom-btn" data-platform="twitter" data-action="in" title="Zoom in">+</button><button class="ov-zoom-btn" data-platform="twitter" data-action="out" title="Zoom out">−</button></div></div>
+        <div class="overview-cell" id="ov-whatsapp"><div class="overview-label">WhatsApp</div><div class="overview-heatmap-toggle"><button class="ov-heat-btn" data-platform="whatsapp" title="Infection heatmap"><i class="ph-fill ph-fire"></i></button></div><canvas id="overview-whatsapp"></canvas><div class="overview-stats" id="ovs-whatsapp"></div><div class="overview-zoom-controls"><button class="ov-zoom-btn" data-platform="whatsapp" data-action="reset" title="Reset view">⌂</button><button class="ov-zoom-btn" data-platform="whatsapp" data-action="in" title="Zoom in">+</button><button class="ov-zoom-btn" data-platform="whatsapp" data-action="out" title="Zoom out">−</button></div></div>
+        <div class="overview-cell" id="ov-instagram"><div class="overview-label">Instagram</div><div class="overview-heatmap-toggle"><button class="ov-heat-btn" data-platform="instagram" title="Infection heatmap"><i class="ph-fill ph-fire"></i></button></div><canvas id="overview-instagram"></canvas><div class="overview-stats" id="ovs-instagram"></div><div class="overview-zoom-controls"><button class="ov-zoom-btn" data-platform="instagram" data-action="reset" title="Reset view">⌂</button><button class="ov-zoom-btn" data-platform="instagram" data-action="in" title="Zoom in">+</button><button class="ov-zoom-btn" data-platform="instagram" data-action="out" title="Zoom out">−</button></div></div>
+        <div class="overview-cell" id="ov-reddit"><div class="overview-label">Reddit</div><div class="overview-heatmap-toggle"><button class="ov-heat-btn" data-platform="reddit" title="Infection heatmap"><i class="ph-fill ph-fire"></i></button></div><canvas id="overview-reddit"></canvas><div class="overview-stats" id="ovs-reddit"></div><div class="overview-zoom-controls"><button class="ov-zoom-btn" data-platform="reddit" data-action="reset" title="Reset view">⌂</button><button class="ov-zoom-btn" data-platform="reddit" data-action="in" title="Zoom in">+</button><button class="ov-zoom-btn" data-platform="reddit" data-action="out" title="Zoom out">−</button></div></div>
       </div>
 
       <!-- Compare Mode Container (Phase 5) -->
@@ -4509,6 +4750,17 @@ self.onmessage = function(e) {
       self.postMessage({ type: 'mutationChain', mutations });
       break;
     }
+    // Infection timing data for heatmap widget
+    case 'requestInfectionTimes': {
+      if (!engine) break;
+      const nLen = engine.nodes.length;
+      const times = new Float64Array(nLen);
+      for (let ti = 0; ti < nLen; ti++) {
+        times[ti] = engine.nodes[ti].infected_at !== null ? engine.nodes[ti].infected_at : -1;
+      }
+      self.postMessage({ type: 'infectionTimes', times: times }, [times.buffer]);
+      break;
+    }
     // Phase 5: Timeline scrub
     case 'scrubTo': {
       if (!engine) break;
@@ -4584,7 +4836,17 @@ function handleWorkerMessage(e) {
     // Phase 5 handlers
     case 'nodeData': handleNodeData(msg); break;
     case 'criticalPath': renderCriticalPath(msg); break;
-    case 'mutationChain': showMutationChain(msg.mutations); break;
+    case 'mutationChain':
+      _cachedMutationData = msg.mutations;
+      _updateDNAThumb();
+      if (_dnaWidget && _dnaWidget.state === 'expanded') _renderDNAExpanded(_dnaWidget.bodyEl);
+      if (_mutChainFromButton) { showMutationChain(msg.mutations); _mutChainFromButton = false; }
+      break;
+    case 'infectionTimes':
+      _cachedInfectionTimes = msg.times;
+      _updateHeatmapThumb();
+      if (_heatmapWidget && _heatmapWidget.state === 'expanded') _renderHeatmapExpanded(_heatmapWidget.bodyEl);
+      break;
   }
 }
 
@@ -4617,6 +4879,7 @@ function buildConfig() {
 
 let svg, simulation, nodeElements, linkElements, linkGroup;
 let graphNodes = [], graphLinks = [];
+let _savedFocusPositions = null;
 const statusColors = ['#A0A0B0','#E05252','#D4A04A','#5294CC','#52B788','#4A4A5A'];
 const typeRadius = { regular:3, influencer:6, fact_checker:5, bot:3, lurker:2 };
 const typeStroke = { regular:'transparent', influencer:'#F0C040', fact_checker:'#52B788', bot:'#9B5DE5', lurker:'transparent' };
@@ -4641,25 +4904,32 @@ function initD3Graph(topology) {
   graphNodes = topology.nodes.map(n => ({ ...n, x: width/2 + (Math.random()-0.5)*200, y: height/2 + (Math.random()-0.5)*200 }));
   graphLinks = topology.edges.map(e => ({ source: e.source, target: e.target }));
 
+  // Scale forces based on node count so chambers contain their nodes at any size
+  const nCount = graphNodes.length;
+  const chargeStr = nCount > 600 ? -3 : -6;
+  const collideR = nCount > 600 ? 2.5 : 4;
+  const clusterStr = 0.08 + Math.max(0, (nCount - 500) / 500) * 0.07; // ramp up for large networks
+  const centroidSpread = 0.25 + Math.max(0, (nCount - 500) / 1500) * 0.1; // push centroids out more
+
   // Chamber centroids for cluster force
   const chamberCentroids = {};
   const nc = new Set(graphNodes.map(n => n.chamber)).size;
   const angleStep = (2 * Math.PI) / Math.max(nc, 1);
   for (let i = 0; i < nc; i++) {
-    chamberCentroids[i] = { x: width/2 + Math.cos(i * angleStep) * Math.min(width, height) * 0.25, y: height/2 + Math.sin(i * angleStep) * Math.min(width, height) * 0.25 };
+    chamberCentroids[i] = { x: width/2 + Math.cos(i * angleStep) * Math.min(width, height) * centroidSpread, y: height/2 + Math.sin(i * angleStep) * Math.min(width, height) * centroidSpread };
   }
 
   simulation = d3.forceSimulation(graphNodes)
-    .force('charge', d3.forceManyBody().strength(-6))
+    .force('charge', d3.forceManyBody().strength(chargeStr))
     .force('center', d3.forceCenter(width/2, height/2))
-    .force('collision', d3.forceCollide(4))
+    .force('collision', d3.forceCollide(collideR))
     .force('link', d3.forceLink(graphLinks).id(d => d.id).distance(30).strength(0.1))
     .force('cluster', alpha => {
       for (const node of graphNodes) {
         const c = chamberCentroids[node.chamber];
         if (c) {
-          node.vx += (c.x - node.x) * alpha * 0.08;
-          node.vy += (c.y - node.y) * alpha * 0.08;
+          node.vx += (c.x - node.x) * alpha * clusterStr;
+          node.vy += (c.y - node.y) * alpha * clusterStr;
         }
       }
     })
@@ -4704,11 +4974,19 @@ function initD3Graph(topology) {
   // Resume simulation gently for final settling
   simulation.alpha(0.05).restart();
 
-  // Echo chamber boundaries (dotted circles) — inside zoomG so they zoom too
+  // Echo chamber boundaries — radius computed from actual node positions
   for (let i = 0; i < nc; i++) {
     const c = chamberCentroids[i];
+    let maxDist = 0;
+    for (const n of graphNodes) {
+      if (n.chamber !== i) continue;
+      const dx = n.x - c.x, dy = n.y - c.y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d > maxDist) maxDist = d;
+    }
+    const boundaryR = Math.max(30, maxDist + 10);
     zoomG.append('circle').attr('cx', c.x).attr('cy', c.y)
-      .attr('r', Math.min(width, height) * 0.15)
+      .attr('r', boundaryR)
       .attr('fill', 'none')
       .attr('stroke', 'rgba(255,255,255,0.06)')
       .attr('stroke-dasharray', '4,4');
@@ -4724,6 +5002,564 @@ function initD3Graph(topology) {
   // Store references for external zoom controls and animateEdgePulse
   svg.node().__zoom_ref = zoom;
   linkGroup._pulseGroup = pulseGroup;
+
+  // Initialize floating widgets after graph is ready
+  if (!_dnaWidget) initWidgets();
+}
+
+// Restore focus-mode graph using saved node positions (avoids position reset)
+function _restoreFocusGraph(topology, savedPos) {
+  const container = document.getElementById('graph-panel');
+  const width = container.clientWidth || 800;
+  const height = Math.max(300, container.clientHeight || 600);
+  svg = d3.select('#main-graph').attr('width', width).attr('height', height);
+  svg.selectAll('*').remove();
+
+  svg.append('rect').attr('width', width).attr('height', height).attr('fill', 'none');
+  const zoomG = svg.append('g').attr('class', 'zoom-container');
+  linkGroup = zoomG.append('g').attr('class', 'links');
+  const nodeGroup = zoomG.append('g').attr('class', 'nodes');
+  const pulseGroup = zoomG.append('g').attr('class', 'pulses');
+
+  // Build position lookup from saved data
+  const posMap = new Map(savedPos.map(p => [p.id, p]));
+
+  // Restore node positions exactly from saved data — no randomization
+  graphNodes = topology.nodes.map(n => {
+    const saved = posMap.get(n.id);
+    return { ...n, x: saved ? saved.x : width/2, y: saved ? saved.y : height/2 };
+  });
+  graphLinks = topology.edges.map(e => ({ source: e.source, target: e.target }));
+
+  // Create simulation but keep it fully stopped — positions are already settled
+  // We need the link force just to resolve source/target references for edge rendering
+  simulation = d3.forceSimulation(graphNodes)
+    .force('link', d3.forceLink(graphLinks).id(d => d.id).distance(30).strength(0))
+    .stop();
+  // Resolve link references without moving anything
+  simulation.tick();
+
+  // Now set up the real forces for future ticking (e.g. if user drags nodes)
+  const chamberCentroids = {};
+  const nc = new Set(graphNodes.map(n => n.chamber)).size;
+  const angleStep = (2 * Math.PI) / Math.max(nc, 1);
+  for (let i = 0; i < nc; i++) {
+    chamberCentroids[i] = { x: width/2 + Math.cos(i * angleStep) * Math.min(width, height) * 0.25, y: height/2 + Math.sin(i * angleStep) * Math.min(width, height) * 0.25 };
+  }
+  simulation
+    .force('charge', d3.forceManyBody().strength(-6))
+    .force('center', d3.forceCenter(width/2, height/2))
+    .force('collision', d3.forceCollide(4))
+    .force('link', d3.forceLink(graphLinks).id(d => d.id).distance(30).strength(0.1))
+    .force('cluster', alpha => {
+      for (const node of graphNodes) {
+        const c = chamberCentroids[node.chamber];
+        if (c) {
+          node.vx += (c.x - node.x) * alpha * 0.08;
+          node.vy += (c.y - node.y) * alpha * 0.08;
+        }
+      }
+    })
+    .alphaDecay(0.02)
+    .on('tick', () => {
+      if (!nodeElements || !linkElements) return;
+      linkElements
+        .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+      nodeElements.attr('cx', d => d.x = Math.max(5, Math.min(width-5, d.x)))
+                   .attr('cy', d => d.y = Math.max(5, Math.min(height-5, d.y)));
+    })
+    .stop();
+  // Zero out all velocities so forces don't push nodes on restart
+  for (const n of graphNodes) { n.vx = 0; n.vy = 0; }
+
+  // Draw static edges at exact saved positions
+  linkElements = linkGroup.selectAll('line').data(graphLinks).join('line')
+    .attr('stroke', 'rgba(255,255,255,0.06)')
+    .attr('stroke-width', 0.4)
+    .attr('x1', d => d.source.x).attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x).attr('y2', d => d.target.y);
+
+  // Draw nodes at exact saved positions
+  nodeElements = nodeGroup.selectAll('circle').data(graphNodes, d => d.id).join('circle')
+    .attr('r', d => typeRadius[d.type] || 3)
+    .attr('fill', statusColors[0])
+    .attr('stroke', d => typeStroke[d.type] || 'transparent')
+    .attr('stroke-width', d => typeStroke[d.type] !== 'transparent' ? 1.5 : 0)
+    .attr('cx', d => d.x)
+    .attr('cy', d => d.y)
+    .style('cursor', 'pointer')
+    .on('click', function(event, d) {
+      event.stopPropagation();
+      if (!worker) return;
+      worker.postMessage({ type: 'requestNodeData', nodeId: d.id });
+      highlightNode(d.id);
+    });
+
+  // Simulation stays stopped — no alpha restart, positions are frozen
+  // It will only restart if user drags a node (handled elsewhere)
+
+  // Echo chamber boundaries — radius computed from actual node positions
+  for (let i = 0; i < nc; i++) {
+    const c = chamberCentroids[i];
+    let maxDist = 0;
+    for (const n of graphNodes) {
+      if (n.chamber !== i) continue;
+      const dx = n.x - c.x, dy = n.y - c.y;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d > maxDist) maxDist = d;
+    }
+    const boundaryR = Math.max(30, maxDist + 10);
+    zoomG.append('circle').attr('cx', c.x).attr('cy', c.y)
+      .attr('r', boundaryR)
+      .attr('fill', 'none')
+      .attr('stroke', 'rgba(255,255,255,0.06)')
+      .attr('stroke-dasharray', '4,4');
+  }
+
+  // D3 zoom + pan
+  const zoom = d3.zoom()
+    .scaleExtent([0.3, 5])
+    .on('zoom', (event) => { zoomG.attr('transform', event.transform); });
+  svg.call(zoom);
+  svg.on('dblclick.zoom', null);
+
+  svg.node().__zoom_ref = zoom;
+  linkGroup._pulseGroup = pulseGroup;
+
+  if (!_dnaWidget) initWidgets();
+}
+
+// ============================================================
+// Floating Widget System + Platform Filters + DNA + Heatmap
+// ============================================================
+
+// --- FloatingWidget class ---
+class FloatingWidget {
+  constructor(opts) {
+    this.id = opts.id;
+    this.title = opts.title;
+    this.thumbW = opts.thumbWidth || 160;
+    this.thumbH = opts.thumbHeight || 85;
+    this.expandW = opts.expandWidth || 420;
+    this.expandH = opts.expandHeight || 280;
+    this.onRender = opts.onRender || (() => {});
+    this.onExpand = opts.onExpand || (() => {});
+    this.state = 'thumbnail'; // thumbnail | expanded | hidden
+    this._dragState = null;
+
+    // Thumbnail
+    this.thumbEl = document.createElement('div');
+    this.thumbEl.className = 'widget-thumb';
+    this.thumbEl.id = 'wthumb-' + this.id;
+    this.thumbEl.innerHTML = '<canvas width="' + (this.thumbW * 2) + '" height="' + (this.thumbH * 2) + '"></canvas>' +
+      '<div class="widget-thumb-label">' + this.title + '</div>';
+    this.thumbCanvas = this.thumbEl.querySelector('canvas');
+    this.thumbCtx = this.thumbCanvas.getContext('2d');
+    opts.thumbContainer.appendChild(this.thumbEl);
+
+    // Expanded window
+    this.expandEl = document.createElement('div');
+    this.expandEl.className = 'widget-expanded widget-hidden';
+    this.expandEl.id = 'wexp-' + this.id;
+    this.expandEl.style.width = this.expandW + 'px';
+    this.expandEl.style.height = this.expandH + 'px';
+    const gp = opts.expandContainer.getBoundingClientRect();
+    this.expandEl.style.left = Math.max(10, (gp.width - this.expandW) / 2) + 'px';
+    this.expandEl.style.top = Math.max(50, (gp.height - this.expandH) / 2) + 'px';
+    this.expandEl.innerHTML =
+      '<div class="widget-titlebar">' +
+        '<span class="widget-titlebar-text">' + this.title + '</span>' +
+        '<div class="widget-titlebar-btns">' +
+          '<button class="wbtn-min" title="Minimize"><i class="ph ph-minus"></i></button>' +
+          '<button class="wbtn-close" title="Close"><i class="ph ph-x"></i></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="widget-body"></div>' +
+      '<div class="widget-resize-handle"></div>';
+    this.bodyEl = this.expandEl.querySelector('.widget-body');
+    opts.expandContainer.appendChild(this.expandEl);
+
+    // Events
+    this.thumbEl.addEventListener('click', () => this.expand());
+    this.expandEl.querySelector('.wbtn-min').addEventListener('click', () => this.minimize());
+    this.expandEl.querySelector('.wbtn-close').addEventListener('click', () => this.minimize());
+    this._initDrag();
+    this._initResize();
+  }
+
+  expand() {
+    this.state = 'expanded';
+    this.thumbEl.style.display = 'none';
+    this.expandEl.classList.remove('widget-hidden');
+    this._clamp();
+    this.onExpand(this.bodyEl);
+  }
+
+  minimize() {
+    this.state = 'thumbnail';
+    this.expandEl.classList.add('widget-hidden');
+    this.thumbEl.style.display = '';
+  }
+
+  hide() {
+    this.state = 'hidden';
+    this.expandEl.classList.add('widget-hidden');
+    this.thumbEl.style.display = 'none';
+  }
+
+  show() {
+    if (this.state === 'hidden') {
+      this.state = 'thumbnail';
+      this.thumbEl.style.display = '';
+    }
+  }
+
+  _initDrag() {
+    const bar = this.expandEl.querySelector('.widget-titlebar');
+    bar.addEventListener('mousedown', (e) => {
+      if (e.target.closest('button')) return;
+      e.preventDefault();
+      const rect = this.expandEl.getBoundingClientRect();
+      const pRect = this.expandEl.parentElement.getBoundingClientRect();
+      const startX = e.clientX, startY = e.clientY;
+      const origL = rect.left - pRect.left, origT = rect.top - pRect.top;
+      const onMove = (ev) => {
+        this.expandEl.style.left = (origL + ev.clientX - startX) + 'px';
+        this.expandEl.style.top = (origT + ev.clientY - startY) + 'px';
+        this._clamp();
+      };
+      const onUp = () => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  }
+
+  _initResize() {
+    const handle = this.expandEl.querySelector('.widget-resize-handle');
+    handle.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const startW = this.expandEl.offsetWidth;
+      const startH = this.expandEl.offsetHeight;
+      const startX = e.clientX, startY = e.clientY;
+      const onMove = (ev) => {
+        this.expandEl.style.width = Math.max(280, startW + ev.clientX - startX) + 'px';
+        this.expandEl.style.height = Math.max(200, startH + ev.clientY - startY) + 'px';
+        this._clamp();
+        this.onExpand(this.bodyEl);
+      };
+      const onUp = () => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  }
+
+  _clamp() {
+    const p = this.expandEl.parentElement;
+    if (!p) return;
+    const pW = p.clientWidth, pH = p.clientHeight;
+    let l = parseFloat(this.expandEl.style.left) || 0;
+    let t = parseFloat(this.expandEl.style.top) || 0;
+    l = Math.max(0, Math.min(l, pW - 60));
+    t = Math.max(0, Math.min(t, pH - 40));
+    this.expandEl.style.left = l + 'px';
+    this.expandEl.style.top = t + 'px';
+  }
+
+  destroy() {
+    if (this.thumbEl.parentElement) this.thumbEl.parentElement.removeChild(this.thumbEl);
+    if (this.expandEl.parentElement) this.expandEl.parentElement.removeChild(this.expandEl);
+  }
+}
+
+// --- Platform Filter ---
+const _platFilterState = { twitter: true, whatsapp: true, instagram: true, reddit: true };
+
+document.getElementById('platform-filters').addEventListener('click', (e) => {
+  const btn = e.target.closest('.plat-filter-btn');
+  if (!btn) return;
+  const plat = btn.dataset.platform;
+  _platFilterState[plat] = !_platFilterState[plat];
+  btn.classList.toggle('active', _platFilterState[plat]);
+  _applyPlatformFilter();
+});
+
+function _applyPlatformFilter() {
+  if (!nodeElements) return;
+  const nodeMap = new Map(graphNodes.map(n => [n.id, n]));
+  nodeElements.transition().duration(200)
+    .attr('opacity', d => d.platforms.some(p => _platFilterState[p]) ? 1 : 0.05);
+  if (linkElements) {
+    linkElements.transition().duration(200)
+      .attr('opacity', d => {
+        const sId = d.source.id !== undefined ? d.source.id : d.source;
+        const tId = d.target.id !== undefined ? d.target.id : d.target;
+        const sn = nodeMap.get(sId), tn = nodeMap.get(tId);
+        const sv = sn && sn.platforms.some(p => _platFilterState[p]);
+        const tv = tn && tn.platforms.some(p => _platFilterState[p]);
+        return (sv && tv) ? 0.06 : 0.005;
+      });
+  }
+}
+
+// --- Widget instances ---
+let _dnaWidget = null, _heatmapWidget = null;
+let _cachedMutationData = null, _cachedInfectionTimes = null;
+let _mutChainFromButton = false;
+
+function initWidgets() {
+  const tc = document.getElementById('widget-thumbnails');
+  const ec = document.getElementById('graph-panel');
+  if (!tc || !ec) return;
+
+  _dnaWidget = new FloatingWidget({
+    id: 'dna', title: 'Mutation DNA',
+    thumbContainer: tc, expandContainer: ec,
+    thumbWidth: 160, thumbHeight: 85,
+    expandWidth: 450, expandHeight: 260,
+    onExpand: (body) => _renderDNAExpanded(body)
+  });
+
+  _heatmapWidget = new FloatingWidget({
+    id: 'heatmap', title: 'Infection Heatmap',
+    thumbContainer: tc, expandContainer: ec,
+    thumbWidth: 160, thumbHeight: 85,
+    expandWidth: 450, expandHeight: 340,
+    onExpand: (body) => _renderHeatmapExpanded(body)
+  });
+}
+
+// --- DNA Thumbnail ---
+function _updateDNAThumb() {
+  if (!_dnaWidget || !_cachedMutationData || _cachedMutationData.length === 0) return;
+  const ctx = _dnaWidget.thumbCtx;
+  const w = _dnaWidget.thumbW * 2, h = _dnaWidget.thumbH * 2;
+  ctx.fillStyle = '#1A1A2E';
+  ctx.fillRect(0, 0, w, h);
+
+  const muts = _cachedMutationData;
+  const segW = w / Math.max(1, muts.length);
+  const yC = h / 2;
+  for (let i = 0; i < muts.length; i++) {
+    const col = EMOTION_COLORS_MAP[muts[i].dominantEmotion] || '#999';
+    const y1 = yC + Math.sin(i * 0.7) * (h * 0.28);
+    const y2 = yC + Math.sin(i * 0.7 + Math.PI) * (h * 0.28);
+    // Strand 1
+    ctx.fillStyle = col;
+    ctx.globalAlpha = 0.5 + (muts[i].contentQuality || 0.5) * 0.5;
+    ctx.beginPath();
+    ctx.arc(i * segW + segW / 2, y1, Math.max(3, segW * 0.35), 0, Math.PI * 2);
+    ctx.fill();
+    // Strand 2
+    ctx.globalAlpha = 0.3 + (muts[i].contentQuality || 0.5) * 0.4;
+    ctx.beginPath();
+    ctx.arc(i * segW + segW / 2, y2, Math.max(3, segW * 0.35), 0, Math.PI * 2);
+    ctx.fill();
+    // Rung
+    if (i % 2 === 0) {
+      ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = 1;
+      ctx.beginPath();
+      ctx.moveTo(i * segW + segW / 2, y1);
+      ctx.lineTo(i * segW + segW / 2, y2);
+      ctx.stroke();
+    }
+  }
+  ctx.globalAlpha = 1;
+}
+
+// --- DNA Expanded ---
+function _renderDNAExpanded(bodyEl) {
+  if (!_cachedMutationData || _cachedMutationData.length === 0) {
+    bodyEl.innerHTML = '<div class="widget-body-empty">No mutations yet — run a simulation</div>';
+    return;
+  }
+  bodyEl.innerHTML = '';
+  const muts = _cachedMutationData;
+  const w = bodyEl.clientWidth || 400;
+  const h = bodyEl.clientHeight || 220;
+
+  const svgEl = d3.select(bodyEl).append('svg').attr('width', w).attr('height', h);
+  const xScale = d3.scaleLinear().domain([0, Math.max(1, muts.length - 1)]).range([30, w - 20]);
+  const yMid = h / 2;
+  const amp = Math.min(40, h * 0.2);
+
+  // Draw helix paths
+  const pts1 = muts.map((d, i) => [xScale(i), yMid + Math.sin(i * 0.8) * amp]);
+  const pts2 = muts.map((d, i) => [xScale(i), yMid + Math.sin(i * 0.8 + Math.PI) * amp]);
+
+  const line = d3.line().x(d => d[0]).y(d => d[1]).curve(d3.curveBasis);
+  svgEl.append('path').attr('d', line(pts1))
+    .attr('fill', 'none').attr('stroke', 'rgba(224,82,82,0.35)').attr('stroke-width', 2);
+  svgEl.append('path').attr('d', line(pts2))
+    .attr('fill', 'none').attr('stroke', 'rgba(82,148,204,0.35)').attr('stroke-width', 2);
+
+  // Rungs
+  for (let i = 0; i < muts.length; i++) {
+    svgEl.append('line')
+      .attr('x1', pts1[i][0]).attr('y1', pts1[i][1])
+      .attr('x2', pts2[i][0]).attr('y2', pts2[i][1])
+      .attr('stroke', 'rgba(255,255,255,0.07)').attr('stroke-width', 1);
+  }
+
+  // Dots on top strand
+  svgEl.selectAll('.dna-dot').data(muts).join('circle')
+    .attr('cx', (d, i) => pts1[i][0])
+    .attr('cy', (d, i) => pts1[i][1])
+    .attr('r', d => 4 + (d.contentQuality || 0.5) * 4)
+    .attr('fill', d => EMOTION_COLORS_MAP[d.dominantEmotion] || '#999')
+    .attr('stroke', 'rgba(255,255,255,0.3)').attr('stroke-width', 0.5)
+    .attr('opacity', 0.85)
+    .append('title').text(d => 'v' + d.version + ' | ' + d.dominantEmotion + ' (' + (d.dominantValue || 0).toFixed(2) + ') | ' + (d.platform || '?'));
+
+  // Version labels
+  svgEl.selectAll('.dna-lbl').data(muts).join('text')
+    .attr('x', (d, i) => pts1[i][0])
+    .attr('y', (d, i) => pts1[i][1] - 12)
+    .attr('text-anchor', 'middle').attr('font-size', '9px')
+    .attr('font-family', 'var(--font-mono)')
+    .attr('fill', 'rgba(255,255,255,0.45)')
+    .text(d => 'v' + d.version);
+
+  // Bottom legend
+  const emotions = [...new Set(muts.map(m => m.dominantEmotion))];
+  const legY = h - 14;
+  emotions.forEach((em, i) => {
+    const lx = 10 + i * 75;
+    svgEl.append('circle').attr('cx', lx).attr('cy', legY).attr('r', 4)
+      .attr('fill', EMOTION_COLORS_MAP[em] || '#999');
+    svgEl.append('text').attr('x', lx + 8).attr('y', legY + 3)
+      .attr('font-size', '8px').attr('font-family', 'var(--font-mono)')
+      .attr('fill', 'rgba(255,255,255,0.4)').text(em);
+  });
+}
+
+// --- Heatmap Thumbnail ---
+function _updateHeatmapThumb() {
+  if (!_heatmapWidget || !_cachedInfectionTimes || !graphNodes.length) return;
+  const ctx = _heatmapWidget.thumbCtx;
+  const w = _heatmapWidget.thumbW * 2, h = _heatmapWidget.thumbH * 2;
+  ctx.fillStyle = '#1A1A2E';
+  ctx.fillRect(0, 0, w, h);
+
+  // Find bounds of graphNodes positions
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (const n of graphNodes) {
+    if (n.x < minX) minX = n.x; if (n.x > maxX) maxX = n.x;
+    if (n.y < minY) minY = n.y; if (n.y > maxY) maxY = n.y;
+  }
+  const rangeX = maxX - minX || 1, rangeY = maxY - minY || 1;
+  const pad = 8;
+  const sx = (w - pad * 2) / rangeX, sy = (h - pad * 2) / rangeY;
+  const maxTime = appState.simTime || 1;
+
+  for (let i = 0; i < graphNodes.length; i++) {
+    const n = graphNodes[i];
+    const t = _cachedInfectionTimes[i] !== undefined ? _cachedInfectionTimes[i] : -1;
+    ctx.fillStyle = _infectionColor(t, maxTime);
+    ctx.globalAlpha = t >= 0 ? 0.8 : 0.25;
+    ctx.beginPath();
+    ctx.arc(pad + (n.x - minX) * sx, pad + (n.y - minY) * sy, 1.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}
+
+// --- Heatmap Expanded ---
+function _renderHeatmapExpanded(bodyEl) {
+  if (!_cachedInfectionTimes || !graphNodes.length) {
+    bodyEl.innerHTML = '<div class="widget-body-empty">Run simulation first</div>';
+    return;
+  }
+  bodyEl.innerHTML = '';
+  const w = bodyEl.clientWidth || 400;
+  const h = bodyEl.clientHeight || 280;
+  const svgEl = d3.select(bodyEl).append('svg').attr('width', w).attr('height', h);
+
+  // Compute bounds
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (const n of graphNodes) {
+    if (n.x < minX) minX = n.x; if (n.x > maxX) maxX = n.x;
+    if (n.y < minY) minY = n.y; if (n.y > maxY) maxY = n.y;
+  }
+  const rangeX = maxX - minX || 1, rangeY = maxY - minY || 1;
+  const pad = 16;
+  const legendH = 28;
+  const drawH = h - legendH;
+  const sx = (w - pad * 2) / rangeX, sy = (drawH - pad * 2) / rangeY;
+  const maxTime = appState.simTime || 1;
+
+  // Edges (very subtle)
+  svgEl.append('g').selectAll('line').data(graphLinks).join('line')
+    .attr('x1', d => { const s = typeof d.source === 'object' ? d.source : graphNodes.find(n => n.id === d.source); return pad + ((s ? s.x : 0) - minX) * sx; })
+    .attr('y1', d => { const s = typeof d.source === 'object' ? d.source : graphNodes.find(n => n.id === d.source); return pad + ((s ? s.y : 0) - minY) * sy; })
+    .attr('x2', d => { const t = typeof d.target === 'object' ? d.target : graphNodes.find(n => n.id === d.target); return pad + ((t ? t.x : 0) - minX) * sx; })
+    .attr('y2', d => { const t = typeof d.target === 'object' ? d.target : graphNodes.find(n => n.id === d.target); return pad + ((t ? t.y : 0) - minY) * sy; })
+    .attr('stroke', 'rgba(255,255,255,0.03)').attr('stroke-width', 0.3);
+
+  // Nodes
+  svgEl.append('g').selectAll('circle').data(graphNodes).join('circle')
+    .attr('cx', d => pad + (d.x - minX) * sx)
+    .attr('cy', d => pad + (d.y - minY) * sy)
+    .attr('r', 2.5)
+    .attr('fill', (d, i) => _infectionColor(_cachedInfectionTimes[i], maxTime))
+    .attr('opacity', (d, i) => _cachedInfectionTimes[i] >= 0 ? 0.85 : 0.2)
+    .append('title').text((d, i) => {
+      const t = _cachedInfectionTimes[i];
+      return 'Node #' + d.id + (t >= 0 ? ' | Infected at ' + formatTime(t) : ' | Never infected');
+    });
+
+  // Color legend
+  const lgW = Math.min(180, w - 60);
+  const lgX = (w - lgW) / 2;
+  const lgY = drawH + 4;
+  const defs = svgEl.append('defs');
+  const grad = defs.append('linearGradient').attr('id', 'hm-grad');
+  grad.append('stop').attr('offset', '0%').attr('stop-color', '#E05252');
+  grad.append('stop').attr('offset', '50%').attr('stop-color', '#D4A04A');
+  grad.append('stop').attr('offset', '100%').attr('stop-color', '#5294CC');
+  svgEl.append('rect').attr('x', lgX).attr('y', lgY).attr('width', lgW).attr('height', 8)
+    .attr('fill', 'url(#hm-grad)').attr('rx', 4);
+  svgEl.append('text').attr('x', lgX - 4).attr('y', lgY + 7).attr('text-anchor', 'end')
+    .attr('font-size', '8px').attr('font-family', 'var(--font-mono)').attr('fill', 'rgba(255,255,255,0.45)').text('Early');
+  svgEl.append('text').attr('x', lgX + lgW + 4).attr('y', lgY + 7)
+    .attr('font-size', '8px').attr('font-family', 'var(--font-mono)').attr('fill', 'rgba(255,255,255,0.45)').text('Late');
+}
+
+// --- Infection color interpolation ---
+function _infectionColor(t, maxTime) {
+  if (t < 0) return '#3A3A4A';
+  const ratio = Math.min(1, t / Math.max(1, maxTime));
+  // Red (early) → Amber (mid) → Blue (late)
+  if (ratio < 0.5) {
+    const r2 = ratio * 2;
+    const r = Math.round(224 + (212 - 224) * r2);
+    const g = Math.round(82 + (160 - 82) * r2);
+    const b = Math.round(82 + (74 - 82) * r2);
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  } else {
+    const r2 = (ratio - 0.5) * 2;
+    const r = Math.round(212 + (82 - 212) * r2);
+    const g = Math.round(160 + (148 - 160) * r2);
+    const b = Math.round(74 + (204 - 74) * r2);
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+}
+
+// --- Widget data request helper ---
+function _requestWidgetData() {
+  if (worker) {
+    worker.postMessage({ type: 'requestMutationChain' });
+    worker.postMessage({ type: 'requestInfectionTimes' });
+  }
 }
 
 // ============================================================
@@ -4774,14 +5610,21 @@ function initEnhancedGraph(topology) {
   }));
   graphLinks = topology.edges.map(e => ({ source: e.source, target: e.target }));
 
-  // Chamber centroids — pushed further out (0.35 vs 0.25)
+  // Scale enhanced forces for larger networks
+  const eCount = graphNodes.length;
+  const eChargeStr = eCount > 600 ? -15 : -30;
+  const eCollideR = eCount > 600 ? 4 : 8;
+  const eClusterStr = 0.15 + Math.max(0, (eCount - 500) / 500) * 0.10;
+  const eCentroidSpread = 0.35 + Math.max(0, (eCount - 500) / 1500) * 0.1;
+
+  // Chamber centroids — pushed further out
   _enhancedChamberCentroids = {};
   const nc = new Set(graphNodes.map(n => n.chamber)).size;
   const angleStep = (2 * Math.PI) / Math.max(nc, 1);
   for (let i = 0; i < nc; i++) {
     _enhancedChamberCentroids[i] = {
-      x: width/2 + Math.cos(i * angleStep - Math.PI/2) * Math.min(width, height) * 0.35,
-      y: height/2 + Math.sin(i * angleStep - Math.PI/2) * Math.min(width, height) * 0.35
+      x: width/2 + Math.cos(i * angleStep - Math.PI/2) * Math.min(width, height) * eCentroidSpread,
+      y: height/2 + Math.sin(i * angleStep - Math.PI/2) * Math.min(width, height) * eCentroidSpread
     };
   }
 
@@ -4791,16 +5634,16 @@ function initEnhancedGraph(topology) {
 
   // Enhanced force simulation
   simulation = d3.forceSimulation(graphNodes)
-    .force('charge', d3.forceManyBody().strength(-30))
+    .force('charge', d3.forceManyBody().strength(eChargeStr))
     .force('center', d3.forceCenter(width/2, height/2).strength(0.03))
-    .force('collision', d3.forceCollide(8))
+    .force('collision', d3.forceCollide(eCollideR))
     .force('link', d3.forceLink(graphLinks).id(d => d.id).distance(60).strength(0.05))
     .force('cluster', alpha => {
       for (const node of graphNodes) {
         const c = _enhancedChamberCentroids[node.chamber];
         if (c) {
-          node.vx += (c.x - node.x) * alpha * 0.15;
-          node.vy += (c.y - node.y) * alpha * 0.15;
+          node.vx += (c.x - node.x) * alpha * eClusterStr;
+          node.vy += (c.y - node.y) * alpha * eClusterStr;
         }
       }
     })
@@ -5181,6 +6024,15 @@ document.getElementById('btn-run').addEventListener('click', () => {
   document.getElementById('gs-believing').textContent = '0% believing';
   document.getElementById('gs-corrected').textContent = '0% corrected';
   document.getElementById('gs-r0').textContent = 'R0: --';
+  document.getElementById('gs-hops').textContent = 'Hops: 0';
+  document.getElementById('gs-mutations').textContent = 'Mut: 0';
+  document.getElementById('gs-sharers').textContent = 'Sharers: 0';
+  // Reset widgets
+  _cachedMutationData = null; _cachedInfectionTimes = null;
+  if (_dnaWidget) { _dnaWidget.destroy(); _dnaWidget = null; }
+  if (_heatmapWidget) { _heatmapWidget.destroy(); _heatmapWidget = null; }
+  _savedFocusPositions = null;
+  updateVisualization._lastTime = 0;
   worker.postMessage({ type: 'init', config });
   // Auto-play after short delay
   setTimeout(() => {
@@ -5206,12 +6058,28 @@ document.getElementById('btn-reset').addEventListener('click', () => {
   document.getElementById('gs-believing').textContent = '0% believing';
   document.getElementById('gs-corrected').textContent = '0% corrected';
   document.getElementById('gs-r0').textContent = 'R0: --';
+  document.getElementById('gs-hops').textContent = 'Hops: 0';
+  document.getElementById('gs-mutations').textContent = 'Mut: 0';
+  document.getElementById('gs-sharers').textContent = 'Sharers: 0';
   document.getElementById('time-display').textContent = '0:00 / 0:00';
   document.getElementById('scrubber').value = 0;
-  // Clear thumbnails
+  // Clear overview thumbnails
   for (const id of ['thumb-0','thumb-1','thumb-2']) {
     const c = document.getElementById(id);
     if (c) { const ctx = c.getContext('2d'); ctx.fillStyle = '#1A1A2E'; ctx.fillRect(0, 0, c.width, c.height); }
+  }
+  // Clear floating widgets
+  _cachedMutationData = null; _cachedInfectionTimes = null;
+  if (_dnaWidget) { _dnaWidget.destroy(); _dnaWidget = null; }
+  if (_heatmapWidget) { _heatmapWidget.destroy(); _heatmapWidget = null; }
+  _savedFocusPositions = null;
+  updateVisualization._lastTime = 0;
+  // Reset overview zoom/pan/heatmap state
+  for (const p of ['twitter','whatsapp','instagram','reddit']) {
+    _ovZoomState[p].scale = 1; _ovZoomState[p].panX = 0; _ovZoomState[p].panY = 0;
+    _ovHeatmapOn[p] = false;
+    const hb = document.querySelector('.ov-heat-btn[data-platform="' + p + '"]');
+    if (hb) hb.classList.remove('active');
   }
 });
 
@@ -6096,6 +6964,9 @@ function updateAnalytics(snapshot) {
   document.getElementById('gs-believing').textContent = Math.round(s.infectionRate * 100) + '% believing';
   document.getElementById('gs-corrected').textContent = Math.round(s.corrected / n * 100) + '% corrected';
   document.getElementById('gs-r0').textContent = (isPeak ? 'Peak R0: ' : 'R0: ') + displayR0.toFixed(1);
+  document.getElementById('gs-hops').textContent = 'Hops: ' + (s.hops || 0);
+  document.getElementById('gs-mutations').textContent = 'Mut: ' + (s.mutations || 0);
+  document.getElementById('gs-sharers').textContent = 'Sharers: ' + (s.believing || 0);
   // Spread chart
   const timeLabel = formatTime(snapshot.time);
   spreadData.labels.push(timeLabel);
@@ -6594,6 +7465,11 @@ let seenEventTimes = new Set();
 
 function updateVisualization(snapshot) {
   if (!snapshot) return;
+  // Detect time jump (scrub backward) → force refresh widget data
+  if (snapshot.time < (updateVisualization._lastTime || 0) && worker) {
+    _requestWidgetData();
+  }
+  updateVisualization._lastTime = snapshot.time;
   // Update node colors
   updateNodeColors(snapshot.status);
   // Edge pulses + cache edge events for tooltips (Phase 5)
@@ -6632,6 +7508,10 @@ function updateVisualization(snapshot) {
     if (appState.layoutMode === 'compare') renderCompareChart();
     if (appState.layoutMode === 'enhanced') updateEnhancedHulls();
   }
+  // Widget data updates (every 10th tick)
+  if (updateVisualization._counter % 10 === 0) {
+    _requestWidgetData();
+  }
 }
 
 // ============================================================
@@ -6653,7 +7533,7 @@ function addSimAnalysisButtons() {
     if (worker) worker.postMessage({ type: 'requestCriticalPath' });
   });
   document.getElementById('btn-mutation-chain').addEventListener('click', () => {
-    if (worker) worker.postMessage({ type: 'requestMutationChain' });
+    if (worker) { worker.postMessage({ type: 'requestMutationChain' }); _mutChainFromButton = true; }
   });
 }
 
@@ -6951,13 +7831,27 @@ document.querySelectorAll('#layout-toggle .layout-btn').forEach(btn => {
     compareContainer.classList.add('hidden');
     rightPanel.style.display = '';
 
+    // Save node positions and stop simulation before leaving focus mode
+    if (mode !== 'focus' && graphNodes.length > 0 && !appState._wasEnhanced) {
+      _savedFocusPositions = graphNodes.map(n => ({ id: n.id, x: n.x, y: n.y }));
+      if (simulation) simulation.stop();
+    }
+
     switch (mode) {
       case 'focus':
-        // If returning from enhanced mode, re-init normal graph
+        // Restore saved positions (from any previous mode switch)
         if (appState._wasEnhanced && appState.topology) {
-          initD3Graph(appState.topology);
+          if (_savedFocusPositions) {
+            _restoreFocusGraph(appState.topology, _savedFocusPositions);
+          } else {
+            initD3Graph(appState.topology);
+          }
           if (appState.lastSnapshot) updateNodeColors(appState.lastSnapshot.status);
           appState._wasEnhanced = false;
+        } else if (_savedFocusPositions && appState.topology) {
+          // Returning from overview/compare (non-enhanced) — restore positions
+          _restoreFocusGraph(appState.topology, _savedFocusPositions);
+          if (appState.lastSnapshot) updateNodeColors(appState.lastSnapshot.status);
         }
         break;
       case 'compare': {
@@ -6966,9 +7860,13 @@ document.querySelectorAll('#layout-toggle .layout-btn').forEach(btn => {
         compareContainer.classList.remove('hidden');
         // Reset panel sizes to 50/50
         document.getElementById('compare-left').style.flexBasis = '50%';
-        // If coming from enhanced, re-init normal graph first
+        // If coming from enhanced, restore focus graph for compare panel
         if (appState._wasEnhanced && appState.topology) {
-          initD3Graph(appState.topology);
+          if (_savedFocusPositions) {
+            _restoreFocusGraph(appState.topology, _savedFocusPositions);
+          } else {
+            initD3Graph(appState.topology);
+          }
           if (appState.lastSnapshot) updateNodeColors(appState.lastSnapshot.status);
           appState._wasEnhanced = false;
         }
@@ -6987,13 +7885,18 @@ document.querySelectorAll('#layout-toggle .layout-btn').forEach(btn => {
         graphPanel.style.display = 'none';
         overviewGrid.classList.remove('hidden');
         if (appState._wasEnhanced && appState.topology) {
-          initD3Graph(appState.topology);
+          if (_savedFocusPositions) {
+            _restoreFocusGraph(appState.topology, _savedFocusPositions);
+          } else {
+            initD3Graph(appState.topology);
+          }
           if (appState.lastSnapshot) updateNodeColors(appState.lastSnapshot.status);
           appState._wasEnhanced = false;
         }
         if (appState.lastSnapshot) renderOverviewPanels(appState.lastSnapshot);
         break;
       case 'enhanced':
+        // Positions already saved above before the switch statement
         // Re-initialize graph with enhanced force parameters
         if (appState.topology) {
           initEnhancedGraph(appState.topology);
@@ -7003,6 +7906,80 @@ document.querySelectorAll('#layout-toggle .layout-btn').forEach(btn => {
         break;
     }
   });
+});
+
+// --- Overview panel zoom/pan state ---
+const _ovZoomState = {
+  twitter:   { scale: 1, panX: 0, panY: 0 },
+  whatsapp:  { scale: 1, panX: 0, panY: 0 },
+  instagram: { scale: 1, panX: 0, panY: 0 },
+  reddit:    { scale: 1, panX: 0, panY: 0 }
+};
+const _ovHeatmapOn = { twitter: false, whatsapp: false, instagram: false, reddit: false };
+
+// Heatmap toggle buttons
+document.getElementById('overview-grid').addEventListener('click', (e) => {
+  const heatBtn = e.target.closest('.ov-heat-btn');
+  if (heatBtn) {
+    const plat = heatBtn.dataset.platform;
+    _ovHeatmapOn[plat] = !_ovHeatmapOn[plat];
+    heatBtn.classList.toggle('active', _ovHeatmapOn[plat]);
+    if (appState.lastSnapshot) renderOverviewPanels(appState.lastSnapshot);
+    return;
+  }
+  const zoomBtn = e.target.closest('.ov-zoom-btn');
+  if (zoomBtn) {
+    const plat = zoomBtn.dataset.platform;
+    const action = zoomBtn.dataset.action;
+    const z = _ovZoomState[plat];
+    if (action === 'in') { z.scale = Math.min(8, z.scale * 1.4); }
+    else if (action === 'out') { z.scale = Math.max(0.5, z.scale / 1.4); }
+    else if (action === 'reset') { z.scale = 1; z.panX = 0; z.panY = 0; }
+    if (appState.lastSnapshot) renderOverviewPanels(appState.lastSnapshot);
+  }
+});
+
+// Mouse wheel zoom on overview canvases
+['twitter', 'whatsapp', 'instagram', 'reddit'].forEach(plat => {
+  const canvas = document.getElementById('overview-' + plat);
+  if (!canvas) return;
+
+  canvas.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const z = _ovZoomState[plat];
+    const rect = canvas.getBoundingClientRect();
+    // Mouse position in canvas coords (before zoom)
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const oldScale = z.scale;
+    const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+    z.scale = Math.max(0.5, Math.min(8, z.scale * factor));
+    // Adjust pan so zoom centres on mouse position
+    const ratio = z.scale / oldScale;
+    z.panX = mx - ratio * (mx - z.panX);
+    z.panY = my - ratio * (my - z.panY);
+    if (appState.lastSnapshot) renderOverviewPanels(appState.lastSnapshot);
+  }, { passive: false });
+
+  // Pan via drag (throttled to rAF)
+  let _ovDrag = null;
+  let _ovDragRaf = null;
+  canvas.addEventListener('mousedown', (e) => {
+    if (e.button !== 0) return;
+    _ovDrag = { startX: e.clientX, startY: e.clientY, origPX: _ovZoomState[plat].panX, origPY: _ovZoomState[plat].panY };
+  });
+  window.addEventListener('mousemove', (e) => {
+    if (!_ovDrag) return;
+    _ovZoomState[plat].panX = _ovDrag.origPX + (e.clientX - _ovDrag.startX);
+    _ovZoomState[plat].panY = _ovDrag.origPY + (e.clientY - _ovDrag.startY);
+    if (!_ovDragRaf) {
+      _ovDragRaf = requestAnimationFrame(() => {
+        _ovDragRaf = null;
+        if (appState.lastSnapshot) renderOverviewPanels(appState.lastSnapshot);
+      });
+    }
+  });
+  window.addEventListener('mouseup', () => { _ovDrag = null; });
 });
 
 function renderOverviewPanels(snapshot) {
@@ -7019,6 +7996,9 @@ function renderOverviewPanels(snapshot) {
   const gpW = svg ? parseFloat(svg.attr('width')) || 800 : 800;
   const gpH = svg ? parseFloat(svg.attr('height')) || 600 : 600;
 
+  const maxTime = appState.simTime || 1;
+  const useHeatmap = _cachedInfectionTimes && _cachedInfectionTimes.length > 0;
+
   for (const plat of platforms) {
     const canvas = document.getElementById('overview-' + plat);
     if (!canvas) continue;
@@ -7031,30 +8011,82 @@ function renderOverviewPanels(snapshot) {
 
     const w = canvas.width, h = canvas.height;
     const sx = w / gpW, sy = h / gpH;
+    const z = _ovZoomState[plat];
+    const showHeat = _ovHeatmapOn[plat] && useHeatmap;
+
+    // Apply zoom/pan transform
+    ctx.save();
+    ctx.translate(z.panX, z.panY);
+    ctx.scale(z.scale, z.scale);
+
+    // Draw edges (very subtle, only when zoomed in enough)
+    if (z.scale >= 1.5 && graphLinks) {
+      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+      ctx.lineWidth = 0.3 / z.scale;
+      const nodeMap = new Map(graphNodes.map(n => [n.id, n]));
+      for (const link of graphLinks) {
+        const sNode = typeof link.source === 'object' ? link.source : nodeMap.get(link.source);
+        const tNode = typeof link.target === 'object' ? link.target : nodeMap.get(link.target);
+        if (!sNode || !tNode) continue;
+        if (!sNode.platforms.includes(plat) && !tNode.platforms.includes(plat)) continue;
+        ctx.beginPath();
+        ctx.moveTo(sNode.x * sx, sNode.y * sy);
+        ctx.lineTo(tNode.x * sx, tNode.y * sy);
+        ctx.stroke();
+      }
+    }
 
     let believing = 0, corrected = 0, total = 0;
+    const r = Math.max(1.5, 2 / Math.sqrt(z.scale));
     for (let i = 0; i < graphNodes.length; i++) {
       const n = graphNodes[i];
       // Filter: only show nodes that belong to this platform
       if (!n.platforms || !n.platforms.includes(plat)) continue;
       const status = snapshot.status[i] || 0;
-      ctx.fillStyle = statusCols[status] || statusCols[0];
-      ctx.globalAlpha = 0.7;
+      if (showHeat) {
+        const t = _cachedInfectionTimes[i] !== undefined ? _cachedInfectionTimes[i] : -1;
+        ctx.fillStyle = _infectionColor(t, maxTime);
+        ctx.globalAlpha = t >= 0 ? 0.85 : 0.2;
+      } else {
+        ctx.fillStyle = statusCols[status] || statusCols[0];
+        ctx.globalAlpha = 0.7;
+      }
       ctx.beginPath();
-      ctx.arc(n.x * sx, n.y * sy, 2, 0, Math.PI * 2);
+      ctx.arc(n.x * sx, n.y * sy, r, 0, Math.PI * 2);
       ctx.fill();
       total++;
       if (status === 1 || status === 2) believing++;
       if (status === 3) corrected++;
     }
     ctx.globalAlpha = 1;
+    ctx.restore();
+
+    // Heatmap legend (drawn outside transform, at bottom-right of canvas)
+    if (showHeat) {
+      const lgW = Math.min(80, w * 0.35);
+      const lgX = w - lgW - 30;
+      const lgY = h - 18;
+      const grad = ctx.createLinearGradient(lgX, 0, lgX + lgW, 0);
+      grad.addColorStop(0, '#E05252');
+      grad.addColorStop(0.5, '#D4A04A');
+      grad.addColorStop(1, '#5294CC');
+      ctx.fillStyle = grad;
+      ctx.fillRect(lgX, lgY, lgW, 5);
+      ctx.font = '8px monospace';
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.textAlign = 'right';
+      ctx.fillText('Early', lgX - 3, lgY + 5);
+      ctx.textAlign = 'left';
+      ctx.fillText('Late', lgX + lgW + 3, lgY + 5);
+    }
 
     // Stats overlay
     const statsEl = document.getElementById('ovs-' + plat);
     if (statsEl) {
       const bPct = total > 0 ? (believing / total * 100).toFixed(0) : 0;
       const cPct = total > 0 ? (corrected / total * 100).toFixed(0) : 0;
-      statsEl.innerHTML = '<span style="color:#E05252">' + bPct + '% inf</span> <span style="color:#5294CC">' + cPct + '% cor</span> <span style="color:rgba(255,255,255,0.4)">' + total + ' nodes</span>';
+      const zoomLabel = z.scale !== 1 ? ' <span style="color:rgba(255,255,255,0.3)">' + z.scale.toFixed(1) + 'x</span>' : '';
+      statsEl.innerHTML = '<span style="color:#E05252">' + bPct + '% inf</span> <span style="color:#5294CC">' + cPct + '% cor</span> <span style="color:rgba(255,255,255,0.4)">' + total + ' nodes</span>' + zoomLabel;
     }
   }
 }
