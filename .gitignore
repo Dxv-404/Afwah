@@ -14,5 +14,8 @@ nul
 Thumbs.db
 desktop.ini
 
+# Spec (internal)
+spec_v2.1.md
+
 # OS
 .DS_Store
