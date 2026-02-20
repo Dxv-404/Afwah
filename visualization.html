@@ -5231,31 +5231,49 @@ const LAYER1_POOLS = {
     "omg", "I'm literally shaking", "this can't be real", "no way", "WHAT",
     "I refuse to believe this", "I'm scared ngl", "please tell me this isn't true",
     "nah this can't be happening", "I literally cannot", "WAIT WHAT", "bro no",
-    "someone please tell me this is fake", "I just got chills reading this"
+    "someone please tell me this is fake", "I just got chills reading this",
+    "this is NOT okay", "I feel sick reading this", "tell me this is photoshopped",
+    "I'm not sleeping tonight", "genuinely terrified rn", "how is this not bigger news",
+    "my stomach just dropped", "ok I'm panicking now"
   ],
   outrage: [
     "THIS IS INSANE", "how is nobody talking about this", "I'm so angry rn",
     "we need to do something", "absolute disgrace", "I can't believe they're getting away with this",
     "this is unacceptable", "WHERE IS THE MEDIA ON THIS", "I'm literally fuming",
-    "how is this not front page news", "everyone needs to see this", "this is criminal"
+    "how is this not front page news", "everyone needs to see this", "this is criminal",
+    "this makes my blood boil", "I am DONE", "who approved this",
+    "somebody needs to be fired", "justice system is a joke",
+    "unfollowing anyone who defends this", "heads need to roll for this",
+    "I have never been this angry at a post"
   ],
   humor: [
     "lmaooo no way", "this is the funniest thing", "I can't", "bro",
     "you can't make this up", "the timeline is unhinged today", "LMAO WHAT",
     "I'm crying", "this has to be satire right", "bro I'm DEAD",
-    "ok but this is hilarious", "the memes write themselves"
+    "ok but this is hilarious", "the memes write themselves",
+    "this timeline never disappoints", "I needed this today", "peak internet moment",
+    "whoever made this deserves an award", "tell me why this is trending",
+    "I showed this to my roommate and they choked", "this is cinema",
+    "the internet was a mistake lmaooo"
   ],
   curiosity: [
     "wait is this actually real?", "hold on what", "huh???",
     "has anyone confirmed this", "I need more info", "source?",
     "ok wait I need to know more", "is there any proof?", "someone explain this",
-    "I keep seeing this everywhere", "anyone else seeing this??"
+    "I keep seeing this everywhere", "anyone else seeing this??",
+    "ok but WHERE did this start", "following this thread",
+    "can someone fact check this", "bookmarking for later",
+    "wait there's more to this", "I have questions", "the plot thickens",
+    "ok I went down the rabbit hole and"
   ],
   urgency: [
     "RIGHT NOW", "hurry", "don't wait", "this is happening TODAY",
     "CHECK YOUR ACCOUNT", "move fast", "PLEASE SHARE THIS",
     "TIME IS RUNNING OUT", "do this NOW before it's too late",
-    "drop everything and read this", "this is urgent"
+    "drop everything and read this", "this is urgent",
+    "BREAKING", "WE NEED TO TALK ABOUT THIS", "don't ignore this",
+    "this affects YOU", "this is not a drill", "set your alarms",
+    "before midnight", "I'm not kidding this is happening RIGHT NOW"
   ]
 };
 
@@ -5268,7 +5286,13 @@ const LAYER2_POOLS = {
     "a guy at work was saying", "my {family_member} just sent me this",
     "ok so I've been reading about this and",
     "not gonna lie I was skeptical at first but",
-    "a reliable source told me", "I know someone who works there and"
+    "a reliable source told me", "I know someone who works there and",
+    "you won't believe what I just heard", "my neighbor was telling me",
+    "I was at {relevant_place} and overheard something",
+    "someone in my group chat sent this", "I just got off the phone and",
+    "ok don't quote me on this but", "apparently this has been going on for a while",
+    "this person I follow posted about it", "my classmate's parent works there and",
+    "I saw this on another platform too", "just got a text about this"
   ],
   claim_details: {
     celebrity: [
@@ -5277,7 +5301,19 @@ const LAYER2_POOLS = {
       "there are photos from the hospital",
       "their last post was 6 hours ago, nothing since",
       "the manager's phone is going straight to voicemail",
-      "sources close to them confirmed it"
+      "sources close to them confirmed it",
+      "their publicist just released a statement",
+      "the paparazzi photos are all over",
+      "they were spotted at the ER entrance",
+      "their co-star just posted a cryptic story",
+      "fans are gathering outside",
+      "their label cancelled upcoming appearances",
+      "their spotify activity went silent",
+      "there's a video from a fan outside the venue",
+      "security was seen rushing in",
+      "their ex just tweeted something vague",
+      "TMZ hasn't confirmed yet but it's looking real",
+      "their latest collab partner just unfollowed them"
     ],
     financial: [
       "the bank's website is down",
@@ -5285,7 +5321,18 @@ const LAYER2_POOLS = {
       "employees were told not to come in tomorrow",
       "there's a line outside the branch already",
       "the stock is crashing as we speak",
-      "they froze all wire transfers"
+      "they froze all wire transfers",
+      "people are panic-selling", "the CEO just resigned without explanation",
+      "the app is showing error codes",
+      "international transfers are being blocked",
+      "the regulators called an emergency meeting",
+      "my financial advisor told me to move everything",
+      "there are armored trucks outside the branch",
+      "the after-hours trading is insane right now",
+      "credit cards from that bank are declining",
+      "their customer service line is just dead air",
+      "insider trading alerts are going off",
+      "the stock halted twice already today"
     ],
     health: [
       "a doctor posted about it on Twitter",
@@ -5293,7 +5340,19 @@ const LAYER2_POOLS = {
       "my neighbor tried it and said it worked",
       "the government is hiding the real numbers",
       "hospitals are overwhelmed right now",
-      "they're trying to suppress this information"
+      "they're trying to suppress this information",
+      "people in the comments are reporting symptoms",
+      "the recall notice just went out",
+      "my doctor friend said to avoid it completely",
+      "the FDA page was updated quietly last night",
+      "emergency rooms are seeing a spike",
+      "the study was funded by their competitor though",
+      "pharmacies are pulling it from shelves",
+      "the original researcher just retracted their paper",
+      "insurance companies are flagging claims related to it",
+      "there's a class action forming already",
+      "local news picked it up but national is silent",
+      "the symptoms match what my friend had last month"
     ],
     campus: [
       "someone from admin told my friend",
@@ -5301,14 +5360,30 @@ const LAYER2_POOLS = {
       "check the university portal",
       "the professors were told this morning",
       "it's on the dean's schedule apparently",
-      "the student union confirmed it"
+      "the student union confirmed it",
+      "campus security sent an alert",
+      "the email chain is wild right now",
+      "someone leaked the internal memo",
+      "the TA confirmed it in discussion section",
+      "the course catalog just got updated",
+      "alumni are freaking out too",
+      "the parking lot was blocked off this morning",
+      "the library closed early with no explanation",
+      "there's a petition going around with 500 signatures",
+      "the campus newspaper is running a story on it",
+      "professor hasn't responded to emails in days",
+      "the discord server is going crazy about this"
     ]
   },
   amplifiers: [
     "and nobody is talking about it", "the media is covering it up",
     "this is being deleted everywhere", "they don't want you to know",
     "share this before it gets taken down", "wake up people",
-    "why isn't anyone reporting this", "do your own research"
+    "why isn't anyone reporting this", "do your own research",
+    "THEY are trying to bury this", "screenshot before it gets removed",
+    "funny how the timing works out huh", "follow the money",
+    "mainstream media won't touch this", "this is just the tip of the iceberg",
+    "connecting some dots here"
   ],
   skeptic_hedges: [
     "I don't know if this is true but",
@@ -5317,13 +5392,21 @@ const LAYER2_POOLS = {
     "this seems off but",
     "not sure I believe this however",
     "I'm skeptical but",
-    "this could be fake but"
+    "this could be fake but",
+    "I want to believe this is fake but",
+    "normally I'd dismiss this kind of thing but",
+    "I really hope this isn't true",
+    "someone please debunk this",
+    "not usually one to share stuff like this but"
   ],
   call_to_actions: [
     "stay safe everyone", "check your accounts NOW",
     "tell your family", "spread the word",
     "be careful out there", "pass this on",
-    "everyone needs to hear this"
+    "everyone needs to hear this",
+    "look out for each other", "keep your eyes open",
+    "don't let them bury this", "screenshot and save",
+    "tell everyone you know"
   ]
 };
 
@@ -5332,13 +5415,16 @@ const LAYER3_SWAPS_SIMPLE = {
   'my cousin': ['my friend', 'someone I know', 'a guy at work', 'my coworker', 'my neighbor'],
   'confirmed': ['verified', 'said', 'swore', 'told me', 'guaranteed'],
   'look at this': ['check this out', 'have you seen this', 'you need to see this'],
+  'just told me': ['just messaged me', 'just called me about this', 'texted me'],
+  'going around': ['spreading', 'making the rounds', 'blowing up', 'circulating'],
+  'apparently': ['supposedly', 'allegedly', 'I heard that', 'word is'],
 };
-const LAYER3_FAMILY = ['mom', 'dad', 'uncle', 'aunt', 'brother', 'sister'];
+const LAYER3_FAMILY = ['mom', 'dad', 'uncle', 'aunt', 'brother', 'sister', 'grandma', 'roommate', 'partner'];
 const LAYER3_PLACES = {
-  celebrity: ['the hospital', 'the studio', 'their agency', 'the venue'],
-  financial: ['the bank', 'the head office', 'the trading floor', 'corporate'],
-  health: ['the hospital', 'the clinic', 'the research lab', 'the pharmacy'],
-  campus: ['the registrar', 'admin', "the dean's office", 'the department']
+  celebrity: ['the hospital', 'the studio', 'their agency', 'the venue', 'their management company', 'the after-party', 'the private jet terminal'],
+  financial: ['the bank', 'the head office', 'the trading floor', 'corporate', 'the call center', 'the downtown branch', 'the investor meeting'],
+  health: ['the hospital', 'the clinic', 'the research lab', 'the pharmacy', 'the testing center', 'the urgent care', 'the health department'],
+  campus: ['the registrar', 'admin', "the dean's office", 'the department', 'student affairs', 'the provost office', 'the campus clinic']
 };
 
 function applySwaps(text, scenario) {
@@ -5360,25 +5446,41 @@ const CORRECTION_POOLS = {
     "FACT CHECK: The claim about {topic} is FALSE. Here's what actually happened...",
     "DEBUNKED: There is no evidence for {topic}. Original source was fabricated.",
     "This is misinformation. {topic} has been thoroughly fact-checked and found false.",
-    "Official statement confirms {topic} claim is completely unfounded."
+    "Official statement confirms {topic} claim is completely unfounded.",
+    "FALSE. The original claim about {topic} has no credible source.",
+    "Nope. {topic} has been debunked by multiple fact-checkers.",
+    "Stop sharing this. The {topic} story is completely made up.",
+    "Just checked \u2014 {topic} is false. Here's the actual source..."
   ],
   relay: [
     "turns out that thing about {topic} was fake, someone debunked it",
     "PSA: the {topic} story is false. Fact-checkers confirmed.",
     "heads up -- that {topic} thing going around is fake",
-    "so apparently the {topic} story was debunked"
+    "so apparently the {topic} story was debunked",
+    "update: {topic} was debunked, passing it along",
+    "just saw that {topic} was fake, FYI",
+    "the {topic} thing is false apparently, just letting people know",
+    "saw a fact-check on {topic}, it's not real"
   ],
   told_you_so: [
     "called it. knew this was fake from the start",
     "I said this was fake and I was right",
     "surprise surprise... it was fake all along",
-    "not to say I told you so but... I told you so"
+    "not to say I told you so but... I told you so",
+    "I KNEW IT. fake from day one.",
+    "yeah no. I wasn't buying {topic} for a second",
+    "this is exactly what I said. nobody listens.",
+    "and there it is. {topic} was fake. shocking."
   ],
   reluctant_walkback: [
     "ok apparently I was wrong about that... my bad for spreading it",
     "turns out I fell for it too. sorry for sharing",
     "well this is embarrassing. it was fake. deleting my post.",
-    "I take back what I said earlier... it's been debunked"
+    "I take back what I said earlier... it's been debunked",
+    "ugh I shared the {topic} thing and it's fake. sorry everyone",
+    "I need to correct myself on {topic}... it's not true",
+    "feel pretty dumb for sharing that {topic} post ngl",
+    "ok so {topic} turned out to be fake. I apologize for spreading it"
   ]
 };
 
@@ -5466,7 +5568,13 @@ function generateMessage(shape, scenario, emotions, scenarioText, platform) {
         "Ok so I've been reading about this for an hour and here's what I think...",
         'Thread: why this is bigger than you think',
         'Let me break this down for you all',
-        "I've been looking into this and it's worse than we thought"
+        "I've been looking into this and it's worse than we thought",
+        "Storytime. So this whole thing goes deeper than you think.",
+        "I spent the last hour looking into this and wow",
+        "LONG POST but please read the whole thing",
+        "Hear me out because this is actually wild",
+        "Nobody is putting the pieces together so let me do it",
+        "This is going to sound crazy but stay with me"
       ]);
       msg += '\n\n' + mainRNG.choice(claims) + '. ' + mainRNG.choice(LAYER2_POOLS.amplifiers);
       if (mainRNG.random() < 0.5) msg += '\n\n' + mainRNG.choice(claims);
@@ -5475,7 +5583,7 @@ function generateMessage(shape, scenario, emotions, scenarioText, platform) {
     case MT_RumorShape.SKEPTIC_SHARER: {
       let msg = mainRNG.choice(LAYER2_POOLS.skeptic_hedges);
       msg += ' ' + mainRNG.choice(claims);
-      msg += '. ' + mainRNG.choice(['can anyone verify?', 'anyone else hearing this?', "I'm not sure about this one", 'thoughts?']);
+      msg += '. ' + mainRNG.choice(['can anyone verify?', 'anyone else hearing this?', "I'm not sure about this one", 'thoughts?', 'does this seem legit to anyone?', 'waiting for an official source', 'something feels off about this', 'idk what to believe anymore']);
       return applySwaps(msg, scenario);
     }
     default:
@@ -5494,21 +5602,21 @@ function applyPlatformTone(message, platform, shape, senderType) {
   switch (platform) {
     case 'whatsapp':
       if (shape === MT_RumorShape.ELABORATOR && mainRNG.random() < 0.3)
-        message = 'Good morning\n' + message;
+        message = mainRNG.choice(['Good morning\n', 'Urgent message\n', 'Please read\n', 'FYI\n']) + message;
       if (senderType === MT_AgentType.BOT || shape === MT_RumorShape.BARE_FORWARD)
         message = 'Forwarded\n' + message;
       break;
     case 'twitter':
       message = message.substring(0, 280);
       if (shape === MT_RumorShape.ELABORATOR) message = '1/ ' + message;
-      if (mainRNG.random() < 0.3) message += ' #breaking';
+      if (mainRNG.random() < 0.3) message += ' ' + mainRNG.choice(['#breaking', '#thread', '#viral', '#developing']);
       break;
     case 'instagram':
-      if (mainRNG.random() < 0.3) message += ' (link in bio)';
+      if (mainRNG.random() < 0.3) message += mainRNG.choice([' (link in bio)', ' \u{1F517} in bio', ' swipe up']);
       break;
     case 'reddit':
-      if (shape === MT_RumorShape.ELABORATOR) message = 'Edit: adding more context\n\n' + message;
-      if (shape === MT_RumorShape.SKEPTIC_SHARER) message += ' [citation needed]';
+      if (shape === MT_RumorShape.ELABORATOR) message = mainRNG.choice(['Edit: adding more context\n\n', 'UPDATE:\n\n', 'Edit 2: more info below\n\n']) + message;
+      if (shape === MT_RumorShape.SKEPTIC_SHARER) message += mainRNG.choice([' [citation needed]', ' [UNVERIFIED]', ' [Developing Story]', ' [Take with grain of salt]']);
       break;
   }
   return message;
@@ -5564,6 +5672,58 @@ function generateScreenshotCard(sourcePlatform, message) {
 }
 
 // --- Generate a feed-level message for an event ---
+// --- Static event variant pools ---
+const MUTATION_MSGS = [
+  'Rumor mutated to v{ver} \u2014 emotional tone shifted',
+  'v{ver}: the story changed as it spread, new emotional angle',
+  'Mutation spotted \u2014 version {ver} has a different vibe now',
+  'The rumor evolved into v{ver}, sentiment drifted during forwarding',
+  'v{ver} detected \u2014 the message morphed as people retold it',
+  'New variant v{ver} emerged with altered emotional framing',
+  'Story mutated at v{ver} \u2014 the narrative shifted slightly',
+  'v{ver}: telephone effect kicked in, message changed tone'
+];
+const AMP_MSGS = [
+  'Algorithm boosted this on {platform} \u2014 {count} new accounts reached',
+  '{platform} algorithm picked it up, pushed to {count} extra users',
+  'Trending boost on {platform}: +{count} non-follower reach',
+  'Algo kicked in on {platform}, {count} people outside the bubble saw this',
+  '{platform} amplification triggered \u2014 {count} additional reach',
+  'The {platform} algorithm is spreading this to {count} new users now'
+];
+const CRISIS_MSGS = [
+  'Crisis event triggered \u2014 spread dynamics intensifying',
+  'External crisis started, people are more susceptible now',
+  'Crisis mode active \u2014 correction delays doubled',
+  'A real-world crisis event just made everyone more anxious',
+  'Crisis event: heightened emotional state across the network',
+  'Breaking crisis \u2014 the network is on edge, sharing accelerates'
+];
+const BOT_MSGS = [
+  'Bot Node {id} flagged and removed from the network',
+  'Suspicious activity \u2014 Node {id} identified as bot, removed',
+  'Node {id} caught as a bot account, pulled from circulation',
+  'Bot detected: Node {id} was spreading too fast, now removed',
+  'Automated account Node {id} spotted and taken down',
+  'Node {id} removed \u2014 behavior pattern matched known bot signatures'
+];
+const COMMUNITY_NOTE_MSGS = [
+  'Community note added on Twitter \u2014 context provided',
+  'Twitter users flagged this, community note now attached',
+  'A community note was added with fact-check context',
+  'Readers added context to this tweet via community notes',
+  'Community note: multiple users flagged this as misleading',
+  'This tweet now has a community note with corrections'
+];
+const SSE_MSGS = [
+  'Super-spreader event \u2014 a high-reach node just blasted this out',
+  'SSE triggered: one account just reached thousands',
+  'Viral moment \u2014 this hit a super-spreader node',
+  'A major account just amplified this to their entire following',
+  'Super-spreader cascade: engagement spike detected',
+  'This just went viral through a high-influence node'
+];
+
 function generateFeedMessage(evt) {
   const scenario = evt.details?.scenario || appState.lastConfig?.scenario || 'celebrity';
   const platform = evt.platform || appState.lastConfig?.seed_platform || 'twitter';
@@ -5602,7 +5762,35 @@ function generateFeedMessage(evt) {
   // For mutations
   if (evt.type === 'mutation') {
     const ver = (evt.details || {}).new_version || '?';
-    return { text: 'Mutation detected: rumor evolved to v' + ver + ' with shifted emotional profile', shape: null, mediaCard: '' };
+    return { text: mainRNG.choice(MUTATION_MSGS).replace(/\{ver\}/g, ver), shape: null, mediaCard: '' };
+  }
+
+  // For super-spreader events
+  if (evt.type === 'super_spreader_event') {
+    return { text: mainRNG.choice(SSE_MSGS), shape: null, mediaCard: '' };
+  }
+
+  // For algorithmic amplification
+  if (evt.type === 'algorithmic_amplification') {
+    const plat = evt.platform || '?';
+    const count = (evt.details || {}).boost_count || 0;
+    return { text: mainRNG.choice(AMP_MSGS).replace(/\{platform\}/g, plat).replace(/\{count\}/g, count), shape: null, mediaCard: '' };
+  }
+
+  // For crisis start
+  if (evt.type === 'crisis_start') {
+    return { text: mainRNG.choice(CRISIS_MSGS), shape: null, mediaCard: '' };
+  }
+
+  // For bot detected
+  if (evt.type === 'bot_detected') {
+    const id = evt.nodeId != null ? evt.nodeId : '?';
+    return { text: mainRNG.choice(BOT_MSGS).replace(/\{id\}/g, id), shape: null, mediaCard: '' };
+  }
+
+  // For community notes
+  if (evt.type === 'twitter_community_note') {
+    return { text: mainRNG.choice(COMMUNITY_NOTE_MSGS), shape: null, mediaCard: '' };
   }
 
   return null; // non-message events use default
@@ -5692,13 +5880,14 @@ function renderFeedCardHTML(evt) {
   if (evt.type === 'node_infected') msg = `Node ${evt.nodeId} believed (from ${evt.targetId})`;
   else if (evt.type === 'node_corrected') msg = `Node ${evt.nodeId} corrected`;
   else if (evt.type === 'rumor_seeded') msg = `Rumor seeded at Node ${evt.nodeId}`;
-  else if (evt.type === 'mutation') msg = `Mutation v${(evt.details||{}).new_version||'?'} at Node ${evt.nodeId}`;
+  else if (evt.type === 'mutation') msg = mainRNG.choice(MUTATION_MSGS).replace(/\{ver\}/g, (evt.details||{}).new_version||'?');
   else if (evt.type === 'platform_hop') msg = `Hop: ${(evt.details||{}).source_platform||'?'} -> ${(evt.details||{}).dest_platform||'?'}`;
-  else if (evt.type === 'algorithmic_amplification') msg = `Algo amp on ${evt.platform||'?'} (+${(evt.details||{}).boost_count||0} reach)`;
+  else if (evt.type === 'algorithmic_amplification') msg = mainRNG.choice(AMP_MSGS).replace(/\{platform\}/g, evt.platform||'?').replace(/\{count\}/g, (evt.details||{}).boost_count||0);
   else if (evt.type === 'correction_generated') msg = `FC Node ${evt.nodeId} generated correction`;
-  else if (evt.type === 'bot_detected') msg = `Bot Node ${evt.nodeId} detected & removed`;
-  else if (evt.type === 'crisis_start') msg = `Crisis event started`;
-  else if (evt.type === 'twitter_community_note') msg = `Community note added on Twitter`;
+  else if (evt.type === 'bot_detected') msg = mainRNG.choice(BOT_MSGS).replace(/\{id\}/g, evt.nodeId);
+  else if (evt.type === 'crisis_start') msg = mainRNG.choice(CRISIS_MSGS);
+  else if (evt.type === 'twitter_community_note') msg = mainRNG.choice(COMMUNITY_NOTE_MSGS);
+  else if (evt.type === 'super_spreader_event') msg = mainRNG.choice(SSE_MSGS);
   else if (evt.type === 'termination') msg = `Simulation ended: ${(evt.details||{}).reason||'unknown'}`;
 
   const cls = isMajor ? 'major' : 'compact';
