@@ -304,4 +304,3 @@ results = engine.run()
 
 ---
 
-*FSWD Course Project*
