@@ -1853,7 +1853,27 @@ i[class^="ph-"] {
             <option value="financial">Financial Crisis</option>
             <option value="health">Health Scare</option>
             <option value="campus">Campus Rumor</option>
+            <option value="custom">Custom Rumor</option>
           </select>
+        </div>
+        <div id="custom-rumor-panel" class="sidebar-field" style="display:none;">
+          <label><i class="ph ph-pencil-simple"></i> Rumor Text</label>
+          <textarea id="in-custom-text" class="sidebar-input" rows="2" placeholder="My professor is secretly a vampire" style="resize:vertical;min-height:40px;"></textarea>
+          <label style="margin-top:8px;"><i class="ph ph-tag"></i> Short Label</label>
+          <input id="in-custom-short" class="sidebar-input" type="text" placeholder="the vampire professor" maxlength="40">
+          <label style="margin-top:8px;"><i class="ph ph-hash"></i> Topic Tag</label>
+          <select id="sel-custom-tag" class="sidebar-select">
+            <option value="celebrity">Celebrity</option>
+            <option value="financial">Financial</option>
+            <option value="health">Health</option>
+            <option value="campus" selected>Campus</option>
+          </select>
+          <label style="margin-top:10px;"><i class="ph ph-heart"></i> Emotions</label>
+          <div class="slider-row"><span style="font-size:11px;width:60px;">Fear</span><input type="range" id="sl-emo-fear" min="0" max="1" step="0.05" value="0.3"><span class="slider-value" id="sv-emo-fear">0.30</span></div>
+          <div class="slider-row"><span style="font-size:11px;width:60px;">Outrage</span><input type="range" id="sl-emo-outrage" min="0" max="1" step="0.05" value="0.2"><span class="slider-value" id="sv-emo-outrage">0.20</span></div>
+          <div class="slider-row"><span style="font-size:11px;width:60px;">Humor</span><input type="range" id="sl-emo-humor" min="0" max="1" step="0.05" value="0.3"><span class="slider-value" id="sv-emo-humor">0.30</span></div>
+          <div class="slider-row"><span style="font-size:11px;width:60px;">Curiosity</span><input type="range" id="sl-emo-curiosity" min="0" max="1" step="0.05" value="0.7"><span class="slider-value" id="sv-emo-curiosity">0.70</span></div>
+          <div class="slider-row"><span style="font-size:11px;width:60px;">Urgency</span><input type="range" id="sl-emo-urgency" min="0" max="1" step="0.05" value="0.5"><span class="slider-value" id="sv-emo-urgency">0.50</span></div>
         </div>
         <div class="sidebar-field">
           <label><i class="ph ph-broadcast"></i> Seed Platform</label>
@@ -3216,7 +3236,9 @@ class SimulationEngine {
   }
 
   _createSeedRumor() {
-    const sc = RUMOR_SCENARIOS[this.config.scenario];
+    const sc = this.config.scenario === 'custom' && this.config.custom_rumor
+      ? this.config.custom_rumor
+      : RUMOR_SCENARIOS[this.config.scenario];
     const rumor = createRumor(0);
     rumor.scenario = this.config.scenario;
     rumor.media_type = this.config.media_type;
@@ -4325,6 +4347,9 @@ self.onmessage = function(e) {
   const msg = e.data;
   switch (msg.type) {
     case 'init': {
+      if (msg.config.scenario === 'custom' && msg.config.custom_rumor) {
+        RUMOR_SCENARIOS.custom = msg.config.custom_rumor;
+      }
       engine = new SimulationEngine(msg.config);
       engine.setup();
       // Store initial checkpoint at time 0 so backward scrub always works
@@ -4561,12 +4586,13 @@ function buildConfig() {
   const seed = parseInt(document.getElementById('in-seed').value) || 0;
   const botPct = parseFloat(document.getElementById('sl-bots').value);
   const corrDelay = parseInt(document.getElementById('sl-correction').value);
-  return {
+  const scenario = document.getElementById('sel-scenario').value;
+  const config = {
     network_size: parseInt(document.getElementById('sl-size').value),
     num_echo_chambers: parseInt(document.getElementById('sl-chambers').value),
     seed_platform: document.getElementById('sel-platform').value,
     active_platforms: ['twitter', 'whatsapp', 'instagram', 'reddit'],
-    scenario: document.getElementById('sel-scenario').value,
+    scenario: scenario,
     media_type: document.getElementById('sel-media').value,
     seed_persona: document.getElementById('sel-persona').value,
     decay_rate: parseFloat(document.getElementById('sl-decay').value),
@@ -4575,6 +4601,8 @@ function buildConfig() {
     master_seed: seed || null,
     max_time: 172800,
   };
+  if (scenario === 'custom') config.custom_rumor = getCustomScenario();
+  return config;
 }
 
 // ============================================================
@@ -5044,6 +5072,32 @@ wireSlider('sl-bots','sv-bots', v => Math.round(parseFloat(v)*100)+'%');
 wireSlider('sl-correction','sv-correction', v => v+'m');
 wireSlider('sl-chambers','sv-chambers', v => v);
 wireSlider('sl-size','sv-size', v => v);
+
+// Custom rumor panel toggle
+document.getElementById('sel-scenario').addEventListener('change', function() {
+  document.getElementById('custom-rumor-panel').style.display = this.value === 'custom' ? 'block' : 'none';
+});
+// Emotion sliders
+['fear','outrage','humor','curiosity','urgency'].forEach(e => {
+  wireSlider('sl-emo-' + e, 'sv-emo-' + e, v => parseFloat(v).toFixed(2));
+});
+
+function getCustomScenario() {
+  const tag = document.getElementById('sel-custom-tag')?.value || 'campus';
+  return {
+    topic_tag: tag,
+    text: document.getElementById('in-custom-text')?.value || 'Breaking news...',
+    shortText: document.getElementById('in-custom-short')?.value || 'this',
+    emotions: {
+      fear: parseFloat(document.getElementById('sl-emo-fear')?.value || 0.3),
+      outrage: parseFloat(document.getElementById('sl-emo-outrage')?.value || 0.2),
+      humor: parseFloat(document.getElementById('sl-emo-humor')?.value || 0.3),
+      curiosity: parseFloat(document.getElementById('sl-emo-curiosity')?.value || 0.7),
+      urgency: parseFloat(document.getElementById('sl-emo-urgency')?.value || 0.5),
+    },
+    platform_affinity: { whatsapp: 0.5, twitter: 0.5, instagram: 0.5, reddit: 0.5 }
+  };
+}
 
 // Platform → media default
 document.getElementById('sel-platform').addEventListener('change', () => {
@@ -5729,16 +5783,24 @@ function generateFeedMessage(evt) {
   const platform = evt.platform || appState.lastConfig?.seed_platform || 'twitter';
   const mediaType = evt.details?.media_type || appState.lastConfig?.media_type || 'text';
 
+  // For custom scenarios, update MT_SCENARIOS with current UI values and resolve the topic tag for claim_details
+  let claimScenario = scenario;
+  if (scenario === 'custom') {
+    MT_SCENARIOS.custom.text = document.getElementById('in-custom-text')?.value || 'Breaking news...';
+    MT_SCENARIOS.custom.shortText = document.getElementById('in-custom-short')?.value || 'this';
+    claimScenario = document.getElementById('sel-custom-tag')?.value || 'campus';
+  }
+
   // For rumor-like events: generate a shaped message
   if (evt.type === 'node_infected' || evt.type === 'rumor_seeded') {
     const senderType = evt.details?.sender_type || MT_AgentType.REGULAR;
     const edgeStrength = evt.details?.edge_strength || 0.5;
     const emotions = evt.details?.emotions;
     const shape = selectRumorShape(senderType, 0.5, 1, 0.5, edgeStrength);
-    let msg = generateMessage(shape, scenario, emotions, null, platform);
+    let msg = generateMessage(shape, claimScenario, emotions, null, platform);
     msg = applyPlatformTone(msg, platform, shape, senderType);
-    msg = addMediaReference(msg, mediaType, scenario);
-    return { text: msg, shape, mediaCard: generateMediaCard(mediaType, scenario, getDominantEmotion(emotions)) };
+    msg = addMediaReference(msg, mediaType, claimScenario);
+    return { text: msg, shape, mediaCard: generateMediaCard(mediaType, claimScenario, getDominantEmotion(emotions)) };
   }
 
   // For correction events
@@ -5754,7 +5816,7 @@ function generateFeedMessage(evt) {
     const srcPlat = evt.details?.source_platform || '?';
     const dstPlat = evt.details?.dest_platform || '?';
     const shape = MT_RumorShape.BARE_FORWARD;
-    const msg = generateMessage(shape, scenario, null, null, dstPlat);
+    const msg = generateMessage(shape, claimScenario, null, null, dstPlat);
     const screenshot = generateScreenshotCard(srcPlat, MT_SCENARIOS[scenario]?.text || 'Breaking...');
     return { text: msg, shape, mediaCard: screenshot };
   }
