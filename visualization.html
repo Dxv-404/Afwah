@@ -345,6 +345,12 @@ html, body {
   align-items: center;
   gap: var(--sp-2);
 }
+.emo-label {
+  font-size: 11px;
+  width: 56px;
+  flex-shrink: 0;
+  color: var(--sidebar-text);
+}
 
 .slider-row input[type="range"] {
   flex: 1;
@@ -1869,11 +1875,11 @@ i[class^="ph-"] {
             <option value="campus" selected>Campus</option>
           </select>
           <label style="margin-top:10px;"><i class="ph ph-heart"></i> Emotions</label>
-          <div class="slider-row"><span style="font-size:11px;width:60px;">Fear</span><input type="range" id="sl-emo-fear" min="0" max="1" step="0.05" value="0.3"><span class="slider-value" id="sv-emo-fear">0.30</span></div>
-          <div class="slider-row"><span style="font-size:11px;width:60px;">Outrage</span><input type="range" id="sl-emo-outrage" min="0" max="1" step="0.05" value="0.2"><span class="slider-value" id="sv-emo-outrage">0.20</span></div>
-          <div class="slider-row"><span style="font-size:11px;width:60px;">Humor</span><input type="range" id="sl-emo-humor" min="0" max="1" step="0.05" value="0.3"><span class="slider-value" id="sv-emo-humor">0.30</span></div>
-          <div class="slider-row"><span style="font-size:11px;width:60px;">Curiosity</span><input type="range" id="sl-emo-curiosity" min="0" max="1" step="0.05" value="0.7"><span class="slider-value" id="sv-emo-curiosity">0.70</span></div>
-          <div class="slider-row"><span style="font-size:11px;width:60px;">Urgency</span><input type="range" id="sl-emo-urgency" min="0" max="1" step="0.05" value="0.5"><span class="slider-value" id="sv-emo-urgency">0.50</span></div>
+          <div class="slider-row"><span class="emo-label">Fear</span><input type="range" id="sl-emo-fear" min="0" max="1" step="0.05" value="0.3"><span class="slider-value" id="sv-emo-fear">0.30</span></div>
+          <div class="slider-row"><span class="emo-label">Outrage</span><input type="range" id="sl-emo-outrage" min="0" max="1" step="0.05" value="0.2"><span class="slider-value" id="sv-emo-outrage">0.20</span></div>
+          <div class="slider-row"><span class="emo-label">Humor</span><input type="range" id="sl-emo-humor" min="0" max="1" step="0.05" value="0.3"><span class="slider-value" id="sv-emo-humor">0.30</span></div>
+          <div class="slider-row"><span class="emo-label">Curiosity</span><input type="range" id="sl-emo-curiosity" min="0" max="1" step="0.05" value="0.7"><span class="slider-value" id="sv-emo-curiosity">0.70</span></div>
+          <div class="slider-row"><span class="emo-label">Urgency</span><input type="range" id="sl-emo-urgency" min="0" max="1" step="0.05" value="0.5"><span class="slider-value" id="sv-emo-urgency">0.50</span></div>
         </div>
         <div class="sidebar-field">
           <label><i class="ph ph-broadcast"></i> Seed Platform</label>
